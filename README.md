@@ -3,6 +3,8 @@
 A full grocery‑delivery platform, built end to end: a customer storefront, a staff back‑office
 console, a Node + SQLite backend, and two installable Android apps — self‑hosted and running 24/7.
 
+**🔗 Live demo: [daqa.me](https://daqa.me)**  ·  **📱 Get the apps: [daqa.me/app](https://daqa.me/app)**
+
 ![Storefront](docs/screenshots/storefront.jpg)
 
 ## What it does
