@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="FreshCart">
+  <!-- Single-colour shopping-bag mark in the brand orange; reads on dark or light. -->
+  <path d="M28 44 h64 l-5.2 58a10 10 0 0 1-10 9.2H43.2a10 10 0 0 1-10-9.2Z" fill="#FAAC01"/>
+  <path d="M45 50V36a15 15 0 0 1 30 0v14" fill="none" stroke="#FAAC01" stroke-width="7" stroke-linecap="round"/>
+  <!-- little leaf, so it reads as "fresh / grocery" -->
+  <path d="M60 66c8-9 20-8 20-8s0 11-8 18c-5 4-12 3-12 3Z" fill="#141414" opacity="0.18"/>
+</svg>

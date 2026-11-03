@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- Standalone install page for the FreshCart Android apps. Served at /install.html.
+     Links point at the permanent /store.apk and /manager.apk URLs (always the latest build);
+     the QR codes encode those same links so you can scan and install from a phone. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Install FreshCart</title>
+  <style>
+    :root { --brand:#FAAC01; --ink:#141414; --bg:#faf7f2; --card:#fff; --line:#eee5d6; --muted:#8a8275; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+           background:var(--bg); color:var(--ink); -webkit-text-size-adjust:100%; }
+    .wrap { max-width:720px; margin:0 auto; padding:28px 16px 48px; }
+    header { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+    header img { width:40px; height:40px; }
+    header .name { font-size:24px; font-weight:800; letter-spacing:1px; color:var(--brand); }
+    .sub { color:var(--muted); margin:2px 0 26px; font-size:15px; }
+    .cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media (max-width:560px){ .cards{ grid-template-columns:1fr; } }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px;
+            text-align:center; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    .badge { display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px;
+             border-radius:16px; font-size:28px; margin-bottom:10px; }
+    .badge.shop { background:var(--brand); }
+    .badge.mgr  { background:var(--ink); }
+    .card h2 { margin:4px 0 2px; font-size:18px; }
+    .card .role { color:var(--muted); font-size:13px; margin-bottom:14px; }
+    .qr { width:180px; height:180px; border-radius:12px; border:1px solid var(--line); background:#fff; }
+    .btn { display:block; margin-top:14px; background:var(--brand); color:var(--ink); text-decoration:none;
+           font-weight:700; padding:13px 16px; border-radius:12px; }
+    .btn.dark { background:var(--ink); color:#fff; }
+    .note { margin-top:28px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 18px;
+            font-size:14px; color:#5b5447; line-height:1.55; }
+    .note b { color:var(--ink); }
+    .note code { background:#f1ece2; padding:1px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="logo.svg" alt="" />
+      <span class="name">FreshCart</span>
+    </header>
+    <p class="sub">Install the Android apps — scan a code with your phone, or tap to download.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="badge shop">🛍️</div>
+        <h2>FreshCart</h2>
+        <div class="role">Customer app</div>
+        <img class="qr" src="store-qr.png" alt="QR to install the customer app" />
+        <a class="btn" href="store.apk">Download APK</a>
+      </div>
+      <div class="card">
+        <div class="badge mgr">🧑‍💼</div>
+        <h2>FreshCart Manager</h2>
+        <div class="role">Staff app</div>
+        <img class="qr" src="manager-qr.png" alt="QR to install the manager app" />
+        <a class="btn dark" href="manager.apk">Download APK</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Always the latest version:</b> these links always serve the newest build — nothing to update manually.
+      Because the apps are a thin shell around the website, the store content refreshes on its own; you only ever
+      re-download if the app wrapper itself changes.<br><br>
+      <b>Installing on Android:</b> tap <b>Download APK</b>, open the downloaded file, and if prompted, allow
+      <code>install from unknown sources</code> (these are sideload apps, not from the Play Store).
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- Rosmarin management console. The six nav buttons switch "panels" (sections) below;
+     each panel's data is filled in by app.js (Admin.tab + the load*/render* methods). -->
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FreshCart · ניהול</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- top bar: brand, the tab nav, a link to the live store, and logout -->
+  <header class="abar">
+    <div class="brand"><img src="logo.svg" alt="" /><span>FreshCart</span>· ניהול</div>
+    <nav>
+      <button class="tab active" data-tab="dash" onclick="Admin.tab('dash')">לוח בקרה</button>
+      <button class="tab" data-tab="products" onclick="Admin.tab('products')">מוצרים</button>
+      <button class="tab" data-tab="orders" onclick="Admin.tab('orders')">הזמנות</button>
+      <button class="tab" data-tab="import" onclick="Admin.tab('import')">ייבוא Excel</button>
+      <button class="tab" data-tab="compare" onclick="Admin.tab('compare')">השוואת חנויות</button>
+      <button class="tab" data-tab="logs" onclick="Admin.tab('logs')">לוגים וגיבוי</button>
+    </nav>
+    <a class="store-link" href="/" target="_blank">↗ לחנות</a>
+    <button class="logout" onclick="Admin.logout()">יציאה</button>
+  </header>
+
+  <main>
+    <!-- DASHBOARD: the stat tiles (filled by Admin.loadStats) -->
+    <section id="dash" class="panel active">
+      <div id="stats" class="stats"></div>
+    </section>
+
+    <!-- PRODUCTS: searchable, paginated grid with inline price/stock/visibility editing -->
+    <section id="products" class="panel">
+      <div class="ptools">
+        <input id="psearch" placeholder="חיפוש מוצר / ברקוד…" />
+        <button onclick="Admin.loadProducts(1)">חיפוש</button>
+        <span id="pcount" class="muted"></span>
+      </div>
+      <div class="tablewrap">
+        <table id="ptable">
+          <thead><tr><th></th><th>ברקוד</th><th>שם</th><th>מותג</th><th>מחיר ₪</th><th>מלאי</th><th>מוצג</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pager"><button id="pprev" onclick="Admin.page(-1)">הקודם</button><span id="ppage"></span><button id="pnext" onclick="Admin.page(1)">הבא</button></div>
+    </section>
+
+    <!-- ORDERS: list of orders; clicking a row opens the edit modal (#omodal) -->
+    <section id="orders" class="panel">
+      <div class="tablewrap">
+        <table id="otable">
+          <thead><tr><th>#</th><th>לקוח</th><th>טלפון</th><th>פריטים</th><th>סה״כ</th><th>סטטוס</th><th>תאריך</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+    <!-- IMPORT: integration status + the Excel import cards and preview -->
+    <section id="import" class="panel">
+      <div id="integrations" class="integ"></div>
+      <h2 class="sx">ייבוא מ‑Excel</h2>
+      <p class="muted">לכל פעולה: הורידו תבנית, מלאו אותה ב‑Excel, העלו — תראו תצוגה מקדימה של השינויים לפני אישור.</p>
+      <div id="importCards" class="imp-cards"></div>
+      <div id="importPreview"></div>
+    </section>
+
+    <!-- LOGS: make a backup, see/undo import batches, and the recent change feed -->
+    <section id="logs" class="panel">
+      <div class="logtools">
+        <button class="save" onclick="Admin.doBackup()">צור גיבוי עכשיו</button>
+        <span id="backupInfo" class="muted"></span>
+      </div>
+      <h3 class="sx">אצוות ייבוא (אפשר לבטל)</h3>
+      <div class="tablewrap"><table id="batchTable"><thead><tr><th>מזהה</th><th>סוג</th><th>סיכום</th><th>שינויים</th><th>תאריך</th><th></th></tr></thead><tbody></tbody></table></div>
+      <h3 class="sx">שינויים אחרונים</h3>
+      <div class="tablewrap"><table id="logTable"><thead><tr><th>תאריך</th><th>פעולה</th><th>פריט</th><th>שדה</th><th>לפני</th><th>אחרי</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <!-- COMPARE: cross-store price comparison (Greenfield / ValueMart / SuperSaver) -->
+    <section id="compare" class="panel">
+      <h2 class="sx">השוואת מחירים ופרטי מוצר בין החנויות</h2>
+      <div id="cmpStores" class="cmp-stores"></div>
+      <div class="ptools">
+        <input id="cmpSearch" placeholder="הקלד שם מוצר או ברקוד…" onkeydown="if(event.key==='Enter')Admin.runCompare()" />
+        <button onclick="Admin.runCompare()">השווה</button>
+        <span id="cmpCount" class="muted"></span>
+      </div>
+      <div id="cmpResults"></div>
+    </section>
+
+  <!-- shared modal used for both the order editor and the product-compare detail view -->
+  <div id="omodal" class="omodal"><div class="omcard" id="omcard"></div></div>
+
+  <!-- full-screen login overlay; hidden once a valid admin token is present -->
+  <div id="login" class="login">
+    <div class="login-card">
+      <img src="logo.svg" alt="FreshCart" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px" />
+      <div style="color:#141414;font-size:22px;font-weight:800;letter-spacing:2px;margin-bottom:4px">FreshCart</div>
+      <h2 style="margin:0 0 14px;color:#8a8178;font-size:15px;font-weight:600">כניסת מנהל</h2>
+      <input id="loginPass" type="password" placeholder="סיסמה" onkeydown="if(event.key==='Enter')Admin.login()" />
+      <button onclick="Admin.login()">כניסה</button>
+      <div id="loginErr" class="lerr"></div>
+    </div>
+  </div>
+  <!-- NOTE: leftover from the old drag-to-reorder columns; the compare table now uses the
+       ‹ › arrow buttons instead, so this library isn't actually used anymore (safe to remove). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+
+# local env / secrets
+.env
+
+# the database + images are built/seeded locally, never committed
+data/
+!data/.gitkeep
+
+# server-generated files
+server/backups/
+*.log
+
+# the real-data export pipeline is source-machine only (not for the public repo)
+scripts/export-from-mssql.js
+
+# Android build outputs + signing keys (rebuilt by each apk's build.ps1)
+**/obj/
+**/stage/
+*.apk
+*.idsig
+*.keystore
+**/res-compiled.zip
+
+# generated per-deployment QR codes
+public/storefront/*-qr.png
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
